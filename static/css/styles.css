@@ -2,7 +2,7 @@
 .listings-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: start;
+    justify-content: center;
 }
 
 .listing-card {
