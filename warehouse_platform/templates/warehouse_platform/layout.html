@@ -1,0 +1,87 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{% block title %}MAKHZNK{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+   
+    
+</head>
+<body>
+    <div class="d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center">
+            <img src="{% static 'img/warehouse_logo-removebg-preview.png' %}" width="70" alt="Warehouse Logo" />
+            <h1 class="ml-3">MAKHZNK</h1>
+        </div>
+        <button id="toggleNightMode" class="btn btn-secondary">Night Mode</button>
+    </div>
+    <div>
+        {% if user.is_authenticated %}
+            Signed in as <strong>{{ user.username }}</strong>.
+        {% endif %}
+    </div>
+    <ul class="nav">
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'index' %}">View All Listings</a>
+        </li>
+        {% if user.is_authenticated %}
+            {% if user.is_superuser %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'admin_dashboard' %}">Admin Dashboard</a>
+                </li>
+            {% endif %}
+            {% if user.user_type == 2 %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'add_item' %}">Add Listing</a>
+                </li>
+            {% endif %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+            </li>
+        {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}">Log In</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'register' %}">Register</a>
+            </li>
+        {% endif %}
+    </ul>
+    <hr>
+    {% block body %}
+    {% endblock %}
+    <!-- Include jQuery and Bootstrap JS for Carousel and other interactive components -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXlYQfnxU5+s6q+XV+3sMBaT4QOv3F4AaSEt/ueO6l7zpaXCtT04W+kwStS3" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script>
+        const toggleNightMode = document.getElementById('toggleNightMode');
+
+        function setNightMode(isNightMode) {
+            if (isNightMode) {
+                document.body.classList.add('night-mode');
+                toggleNightMode.textContent = 'Light Mode';
+            } else {
+                document.body.classList.remove('night-mode');
+                toggleNightMode.textContent = 'Night Mode';
+            }
+            localStorage.setItem('theme', isNightMode ? 'dark' : 'light');
+        }
+
+        toggleNightMode.addEventListener('click', function() {
+            const isNight = document.body.classList.contains('night-mode');
+            setNightMode(!isNight);
+        });
+
+        // Initialize theme on load
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentTheme = localStorage.getItem('theme');
+            setNightMode(currentTheme === 'dark');
+        });
+    </script>
+</body>
+</html>
+
+

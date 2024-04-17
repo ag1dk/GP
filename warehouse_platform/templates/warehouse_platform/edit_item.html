@@ -1,0 +1,17 @@
+{% extends "warehouse_platform/layout.html" %}
+
+{% block body %}
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Item</title>
+</head>
+<body>
+    <h1>Edit Item</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save Changes</button>
+    </form>
+    <p><a href="{% url 'item' item.id %}">Cancel</a></p> <!-- Ensure you have this URL configured -->
+</body>
+{% endblock %}

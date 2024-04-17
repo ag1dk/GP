@@ -1,0 +1,25 @@
+{% extends "warehouse_platform/layout.html" %}
+
+{% block body %}
+<h2>Listings</h2>
+<div class="listings-container">
+    {% for item in warehouse_platform %}
+    <div class="listing-card">
+        <h3 class="title">{{ item.name }}</h3>
+        <!-- Ensure the image URL is present to avoid broken images -->
+        {% if item.thumbnail.url %}
+            <div class="img-container">
+                <img class="itemImg" src="{{ item.thumbnail.url }}" alt="{{ item.name }}">
+            </div>
+        {% endif %}
+        <p class="description">{{ item.description }}</p>
+        <p class="price"><strong>{{ item.price }} SAR</strong></p>
+        <form action="{% url 'item' item.pk %}" method="get">
+            <button type="submit" class="btn btn-primary">View Listing</button>
+        </form>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+
