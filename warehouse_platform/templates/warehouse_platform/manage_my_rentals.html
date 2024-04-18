@@ -1,0 +1,29 @@
+{% extends "warehouse_platform/layout.html" %}
+
+{% block body %}
+<h2>Manage My Rentals</h2>
+<div>
+    <h3>Current Rentals</h3>
+    {% if current_rentals %}
+    <ul>
+        {% for rental in current_rentals %}
+        <li>{{ rental.name }} - Until {{ rental.rental_end_date }}</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No current rentals.</p>
+    {% endif %}
+</div>
+<div>
+    <h3>Past Rentals</h3>
+    {% if past_rentals %}
+    <ul>
+        {% for rental in past_rentals %}
+        <li>{{ rental.name }} - Ended on {{ rental.rental_end_date }}</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No past rentals.</p>
+    {% endif %}
+</div>
+{% endblock %}

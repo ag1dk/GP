@@ -13,6 +13,9 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .forms import ItemForm, ItemImageFormSet
+from django.utils import timezone
+from datetime import timedelta
+
 
 def index(request):
     return render(request, "warehouse_platform/index.html", {
@@ -166,6 +169,43 @@ def admin_dashboard(request):
     return render(request, 'warehouse_platform/admin_dashboard.html', {'items': items})
 
 
+@login_required
+def rent_item(request, item_id):
+    item = get_object_or_404(Item, pk=item_id)
+    if request.method == 'POST' and item.is_rented == False:
+        rental_period = request.POST.get('rental_period')
+        if rental_period == 'weekly':
+            duration = timedelta(weeks=1)
+        elif rental_period == 'monthly':
+            duration = timedelta(weeks=4)
+        elif rental_period == 'yearly':
+            duration = timedelta(weeks=52)
+        else:
+            return HttpResponse("Invalid rental period", status=400)
+
+        item.is_rented = True
+        item.rented_by = request.user
+        item.rental_end_date = timezone.now() + duration
+        item.save()
+        return redirect('manage_my_rentals')
+
+    return render(request, 'warehouse_platform/rent_item.html', {'item': item})
+
+@login_required
+def manage_my_rentals(request):
+    current_rentals = Item.objects.filter(rented_by=request.user, rental_end_date__gte=timezone.now())
+    past_rentals = Item.objects.filter(rented_by=request.user, rental_end_date__lt=timezone.now())
+    return render(request, 'warehouse_platform/manage_my_rentals.html', {
+        'current_rentals': current_rentals,
+        'past_rentals': past_rentals
+    })
+
+@login_required
+def manage_my_listings(request):
+    if request.user.user_type != 2:
+        return HttpResponse("Unauthorized", status=401)
+    listings = Item.objects.filter(owner=request.user)
+    return render(request, 'warehouse_platform/manage_my_listings.html', {'listings': listings})
 
 
 
