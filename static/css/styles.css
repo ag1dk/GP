@@ -62,8 +62,10 @@
   list-style: none;
   transition: all 0.4s ease;
 }
-.sidebar .nav-links li:hover{
-  background: #1d1b31;
+.sidebar .nav-links li:hover,
+.sidebar .nav-links li a:hover {
+  background: #d6d6d6;
+  color: #fff;
 }
 .sidebar .nav-links li .iocn-link{
   display: flex;
@@ -78,7 +80,7 @@
   min-width: 78px;
   text-align: center;
   line-height: 50px;
-  color: #fff;
+  color: #11101d;
   font-size: 20px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -97,7 +99,7 @@
 .sidebar .nav-links li a .link_name{
   font-size: 18px;
   font-weight: 400;
-  color: #fff;
+  color: black;
   transition: all 0.4s ease;
 }
 .sidebar.close .nav-links li a .link_name{
@@ -107,14 +109,14 @@
 .sidebar .nav-links li .sub-menu{
   padding: 6px 6px 14px 80px;
   margin-top: -10px;
-  background: #1d1b31;
+  background: #d6d6d6;
   display: none;
 }
 .sidebar .nav-links li.showMenu .sub-menu{
   display: block;
 }
 .sidebar .nav-links li .sub-menu a{
-  color: #fff;
+  color: #000;
   font-size: 15px;
   padding: 5px 0;
   white-space: nowrap;
@@ -255,6 +257,23 @@
 
 body.night-mode .sidebar {
     background: #11101d;
+}
+
+body.night-mode .sidebar .nav-links li i,
+body.night-mode .sidebar .nav-links li a .link_name {
+  color: #fff;
+}
+
+body.night-mode .sidebar .nav-links li:hover,
+body.night-mode .sidebar .nav-links li a:hover {
+  background: #1d1b31;
+}
+
+body.night-mode .sidebar .nav-links li .sub-menu{
+  background: #1d1b31;
+}
+body.night-mode .sidebar .nav-links li .sub-menu a {
+  color: #fff;
 }
 
 /* Listing Card styles */
