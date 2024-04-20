@@ -178,7 +178,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #1d1b31;
+  background: #dddddd;
   padding: 12px 0;
   transition: all 0.5s ease;
 }
@@ -206,7 +206,7 @@
 }
 .sidebar .profile-details .profile_name,
 .sidebar .profile-details .job{
-  color: #fff;
+  color: #000;
   font-size: 18px;
   font-weight: 500;
   white-space: nowrap;
@@ -265,14 +265,17 @@ body.night-mode .sidebar .nav-links li a .link_name {
 }
 
 body.night-mode .sidebar .nav-links li:hover,
-body.night-mode .sidebar .nav-links li a:hover {
+body.night-mode .sidebar .nav-links li a:hover,
+body.night-mode .sidebar .nav-links li .sub-menu {
   background: #1d1b31;
 }
 
-body.night-mode .sidebar .nav-links li .sub-menu{
-  background: #1d1b31;
+body.night-mode .sidebar .profile-details {
+  background-color: #1d1b31;
 }
-body.night-mode .sidebar .nav-links li .sub-menu a {
+
+body.night-mode .sidebar .nav-links li .sub-menu a,
+body.night-mode .profile-details .profile_name {
   color: #fff;
 }
 
