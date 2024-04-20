@@ -154,41 +154,47 @@
             </li>
           {% endif %}
         </ul>
-    </div>
-    <div class="navmenu d-flex align-items-center justify-content-between">
-        <div class="d-flex align-items-center">
-            <h1 class="ml-3">MAKHZNK</h1>
-        </div>
-        <div class="d-flex align-items-center">
-            <ul class="nav d-none d-md-flex justify-content-center">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'index' %}">View All Listings</a>
-                    <i class='bx bx-menu' ></i>
-                </li>
-                {% if user.is_authenticated %}
-                    {% if user.is_superuser %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'admin_dashboard' %}">Admin Dashboard</a>
-                        </li>
-                    {% endif %}
-                    {% if user.user_type == 2 %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'add_item' %}">Add Listing</a>
-                        </li>
-                    {% endif %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
-                    </li>
-                {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login' %}">Log In</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'register' %}">Register</a>
-                    </li>
-                {% endif %}
-            </ul>
-        </div>
+      </div>
+      <div class="navmenu d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center">
+              <h1 class="ml-3">MAKHZNK</h1>
+          </div>
+          <div class="d-flex align-items-center">
+              <ul class="nav d-none d-md-flex justify-content-center">
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'index' %}">View All Listings</a>
+                  </li>
+                  {% if user.is_authenticated %}
+                      {% if user.is_superuser %}
+                          <li class="nav-item">
+                              <a class="nav-link" href="{% url 'admin_dashboard' %}">Admin Dashboard</a>
+                          </li>
+                      {% endif %}
+                      {% if user.user_type == 2 %}
+                          <li class="nav-item">
+                              <a class="nav-link" href="{% url 'manage_my_listings' %}">Manage My Listings</a>
+                          </li>
+                      {% endif %}
+                      {% if user.user_type == 1 %}
+                          <li class="nav-item">
+                              <a class="nav-link" href="{% url 'manage_my_rentals' %}">Manage My Rentals</a>
+                          </li>
+                      {% endif %}
+                      <li class="nav-item">
+                          <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                      </li>
+                  {% else %}
+                      <li class="nav-item">
+                          <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" href="{% url 'register' %}">Register</a>
+                      </li>
+                  {% endif %}
+              </ul>
+          </div>
+      </div>
+      
         <button id="toggleNightMode" class="btn btn-secondary ml-3">Night Mode</button>
     </div>
     

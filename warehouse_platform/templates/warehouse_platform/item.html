@@ -45,16 +45,20 @@
             <p>Camera Monitoring: {{ item.camera_monitoring|yesno:"Yes,No" }}</p>
             <p>Contract Type: {{ item.get_contract_type_display }}</p>
         </div>
-        <!-- Only show edit and delete links to the owner who is also a warehouse owner -->
-        {% if user.is_authenticated and user.user_type == 2 and item.owner == user %}
         <div class="col-md-6">
+            <!-- Rent button only for customers and if item is not rented -->
+            {% if user.is_authenticated and user.user_type == 1 and not item.is_rented %}
+            <a href="{% url 'rent_item' item.id %}" class="btn btn-primary">Rent This Warehouse</a>
+            {% endif %}
+            <!-- Only show edit and delete links to the owner who is also a warehouse owner -->
+            {% if user.is_authenticated and user.user_type == 2 and item.owner == user %}
             <a href="{% url 'edit_item' item.id %}" class="btn btn-primary">Edit Listing</a>
             <form action="{% url 'delete_item' item.id %}" method="post" style="display:inline;">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?');">Delete Listing</button>
             </form>
+            {% endif %}
         </div>
-        {% endif %}
     </div>
 </div>
 {% endblock %}
