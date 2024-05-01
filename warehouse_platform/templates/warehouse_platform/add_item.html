@@ -1,9 +1,32 @@
 {% extends "warehouse_platform/layout.html" %}
+
 {% block body %}
-<h2>Add New Listing</h2>
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save</button>
-</form>
+<div class="container">
+    <h2>Add New Listing</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div id="map" style="height: 400px;"></div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkQttfsxIX3YHcN6mymGXvIiXZeBapTN4&callback=initMap&libraries=places" async defer></script>
+<script>
+function initMap() {
+    const map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: -34.397, lng: 150.644},
+        zoom: 6
+    });
+    const marker = new google.maps.Marker({
+        position: {lat: -34.397, lng: 150.644},
+        map: map,
+        draggable: true
+    });
+    marker.addListener('dragend', function() {
+        document.getElementById('id_latitude').value = marker.getPosition().lat();
+        document.getElementById('id_longitude').value = marker.getPosition().lng();
+    });
+}
+</script>
 {% endblock %}

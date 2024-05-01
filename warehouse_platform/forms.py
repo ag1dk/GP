@@ -12,7 +12,7 @@ class ItemForm(forms.ModelForm):
     
     class Meta:
         model = Item
-        fields = ['name', 'thumbnail', 'description', 'price', 'warehouse_type', 'area', 'camera_monitoring', 'contract_type']
+        fields = ['name', 'thumbnail', 'description', 'price', 'warehouse_type', 'area', 'camera_monitoring', 'contract_type', 'latitude', 'longitude']
 
     def __init__(self, *args, **kwargs):
         super(ItemForm, self).__init__(*args, **kwargs)
@@ -29,3 +29,7 @@ ItemImageFormSet = modelformset_factory(
     max_num=20,  # Set a reasonable max number, adjust according to your needs
     validate_max=True  # Enable maximum number validation
 )
+
+from django import forms
+from .models import Item
+

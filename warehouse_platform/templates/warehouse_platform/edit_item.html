@@ -1,17 +1,33 @@
 {% extends "warehouse_platform/layout.html" %}
 
 {% block body %}
-<head>
-    <meta charset="UTF-8">
-    <title>Edit Item</title>
-</head>
-<body>
-    <h1>Edit Item</h1>
+<div class="container">
+    <h2>Edit Listing</h2>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Save Changes</button>
+        <div id="map" style="height: 400px;"></div>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
     </form>
-    <p><a href="{% url 'item' item.id %}">Cancel</a></p> <!-- Ensure you have this URL configured -->
-</body>
+</div>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkQttfsxIX3YHcN6mymGXvIiXZeBapTN4&callback=initMap&libraries=places" async defer></script>
+<script>
+function initMap() {
+    const initialPos = { lat: {{ item.latitude|default:-34.397 }}, lng: {{ item.longitude|default:150.644 }} };
+    const map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 6,
+        center: initialPos
+    });
+    const marker = new google.maps.Marker({
+        position: initialPos,
+        map: map,
+        draggable: true
+    });
+    marker.addListener('dragend', function() {
+        document.getElementById('id_latitude').value = marker.getPosition().lat();
+        document.getElementById('id_longitude').value = marker.getPosition().lng();
+    });
+}
+</script>
 {% endblock %}

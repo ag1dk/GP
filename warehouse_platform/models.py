@@ -41,6 +41,8 @@ class Item(models.Model):
     is_rented = models.BooleanField(default=False)
     rented_by = models.ForeignKey(User, related_name='rentals', on_delete=models.SET_NULL, null=True, blank=True)
     rental_end_date = models.DateTimeField(null=True, blank=True)
+    latitude = models.DecimalField(max_digits=40, decimal_places=30, null=True, blank=True)
+    longitude = models.DecimalField(max_digits=40, decimal_places=30, null=True, blank=True)
 
     def check_rental_status(self):
         """ Checks if the rental period has ended and updates the item status accordingly. """
